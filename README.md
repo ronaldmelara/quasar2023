@@ -1,7 +1,9 @@
-## a**Operación Fuego de Quasar**
+## **Operación Fuego de Quasar**
 
 Han Solo ha sido recientemente nombrado General de la Alianza Rebelde y busca dar un golpe contra el Imperio Galáctico para reavivar la llama de la resistencia.
 El servicio de inteligencia rebelde ha detectado un llamado de auxilio de una nave portacarga imperial a la deriva en un campo de asteroides. El manifiesto de la nave es ultra clasificado, pero se rumorea que trasporta raciones y armamento para una legión entera.
+
+![Imagen ilustrativa del enunciado del problema](/assets/img/img_enun_problem01.png)
 
 ## **Desafío**
 
@@ -47,35 +49,42 @@ El servicio recibirá la información de la nave a través de un HTTP POST con u
 siguiente formato:
 
 POST → /topsecret/
+
+```yaml
+
 {
-"satellites": [
-{
-“name”: "kenobi",
-“distance”: 100.0,
-“message”: ["este", "", "", "mensaje", ""]
-},
-{
-“name”: "skywalker",
-“distance”: 115.5
-“message”: ["", "es", "", "", "secreto"]
-},
-{
-“name”: "sato",
-“distance”: 142.7
-“message”: ["este", "", "un", "", ""]
+   "satellites": [
+      {
+        “name”: "kenobi",
+        “distance”: 100.0,
+        “message”: ["este", "", "", "mensaje", ""]
+      },
+      {
+        “name”: "skywalker",
+        “distance”: 115.5
+        “message”: ["", "es", "", "", "secreto"]
+      },
+      {
+        “name”: "sato",
+        “distance”: 142.7
+        “message”: ["este", "", "un", "", ""]
+      }
+   ]
 }
-]
-}
+```
 
 La respuesta, por otro lado, deberá tener la siguiente forma:
 RESPONSE CODE: 200
+
+```yaml
 {
-"position": {
-"x": -100.0,
-"y": 75.5
-},
-"message": "este es un mensaje secreto"
+   "position": {
+     "x": -100.0,
+     "y": 75.5
+   },
+   "message": "este es un mensaje secreto"
 }
+```
 
 En caso que no se pueda determinar la posición o el mensaje, retorna:
 RESPONSE CODE: 404
@@ -85,11 +94,19 @@ RESPONSE CODE: 404
 Considerar que el mensaje ahora debe poder recibirse en diferentes POST al nuevo servicio
 /topsecret_split/ , respetando la misma firma que antes. Por ejemplo:
 POST → /topsecret_split/{satellite_name}
-```yaml{
-"distance": 100.0,
-"message": ["este", "", "", "mensaje", ""]
-}```
+
+```yaml
+{
+   "distance": 100.0,
+   "message": ["este", "", "", "mensaje", ""]
+}
+```
+
 Crear un nuevo servicio /topsecret_split/ que acepte POST y GET. En el GET l a
 respuesta deberá i ndicar l a posición y el mensaje en caso que sea posible determinarlo y tener
 la misma estructura del ejemplo del Nivel 2. Caso contrario, deberá responder un mensaje de
 error indicando que no hay suficiente información.
+
+```
+
+```
