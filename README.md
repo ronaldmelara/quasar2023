@@ -6,6 +6,8 @@
     - [1.3. **Nivel 2**](#13-nivel-2)
     - [1.4. **Nivel 2**](#14-nivel-2)
 - [2. **Solución**](#2-solución)
+    - [2.1 **Localización**](#21-localización)
+    - [2.2 **Mensaje**](#22-mensaje)
 
 <!-- /TOC -->
 
@@ -121,6 +123,8 @@ error indicando que no hay suficiente información.
 
 # 2. **Solución**
 
+## 2.1 **Localización**
+
 Para resolver el punto de GetLocation es necesario poder entender y aplicar el concepto de **"Trilateración"**. La definición nos dice que es una **técnica geométrica para determinar la posición de un objecto conociendo su distancia a tres puntos de referencia**.
 Para poder calcular la posición del objecto en estudio se requiere tener las posicion X e Y del Punto 1 (P1), Punto 2 (P2) y Punto 3(P3) y que cada punto es el centro de una circunferencia. Además, se necesita el radio o distancia desde el centro de cada circunferencia hacia el borde de esta, el cual es el lugar donde se encuentra nuestro objecto a estudiar. Ahora, hay que imaginar que estas 3 circunferencias convergen en un punto, el cual indica el lugar en el espacio donde se encuentra nuestro objecto a estudiar.
 ![Imagen circunferencias](/assets/img/01_sol.jpeg)
@@ -153,3 +157,8 @@ De lo anterior tenemos como resultado 2 ecuaciones:
 
 Finalmente resolvemos por Determinantes o regla de Cramer para obtener las ecuaciones que nos permitirán conocer el punto X e Y donde se intecepta de la nave enemiga con los 3 satélites.
 ![Ecuación por circunferencia](/assets/img/08_sol.jpeg)
+
+
+## 2.2 **Mensaje**
+El problema del mensaje es una solución simple, ya que implica unicamente hacer un **merge** de los 3 arrays que contiene cada satélite. Según se indica que debido al defase de la señal puede que algunas palabras no lleguen al satélite pero queda registrado como un input vacío, lo cual hará que en cada satélite existan 3 colecciones del mismo largo, permitiendo asi el merge.
+De no poderse mezclar o desencriptar el mensaje se deberá enviar un error.
