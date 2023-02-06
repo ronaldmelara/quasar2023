@@ -1,4 +1,3 @@
-
 <!-- TOC -->
 
 - [1. **Operación Fuego de Quasar**](#1-operación-fuego-de-quasar)
@@ -121,10 +120,36 @@ la misma estructura del ejemplo del Nivel 2. Caso contrario, deberá responder u
 error indicando que no hay suficiente información.
 
 # 2. **Solución**
-Para resolver el punto de GetLocation es necesario poder entender y aplicar el concepto de "Trilateración". La definición nos dice que es una **técnica geométrica para determinar la posición de un objecto conociendo su distancia a tres puntos de referencia**.
+
+Para resolver el punto de GetLocation es necesario poder entender y aplicar el concepto de **"Trilateración"**. La definición nos dice que es una **técnica geométrica para determinar la posición de un objecto conociendo su distancia a tres puntos de referencia**.
 Para poder calcular la posición del objecto en estudio se requiere tener las posicion X e Y del Punto 1 (P1), Punto 2 (P2) y Punto 3(P3) y que cada punto es el centro de una circunferencia. Además, se necesita el radio o distancia desde el centro de cada circunferencia hacia el borde de esta, el cual es el lugar donde se encuentra nuestro objecto a estudiar. Ahora, hay que imaginar que estas 3 circunferencias convergen en un punto, el cual indica el lugar en el espacio donde se encuentra nuestro objecto a estudiar.
 ![Imagen circunferencias](/assets/img/01_sol.jpeg)
 
 ![Imagen circunferencias](/assets/img/02_sol.jpeg)
 
+Entonces tenemos la siguiente información:
 
+
+| Satélite | Posición X | Posición Y | Distancia |
+| ----------- | ------------- | ------------- | ----------- |
+| Kenobi    | -500        | -200        | 100       |
+| Skywalker | 100         | -200        | 115.5     |
+| Sato      | 500         | 100         | 142.7     |
+
+La teoría analítica para cada uno de los puntos en cuestión nos indica que debemos de usar la siguiente ecuación:
+![Ecuación](/assets/img/03_sol.jpeg)
+
+Sacamos esta ecuación para cada circunferencia y punto dado:
+![Ecuación por circunferencia](/assets/img/04_sol.jpeg)
+
+Ahora igualamos la ecuación del P1 en P2, y agrupamos los resultados nombrandolos como A, B y C
+![Ecuación por circunferencia](/assets/img/05_sol.jpeg)
+
+Ahora igualamos la ecuación de P2 en P3 y agrupamos los resultados nombrandolos como E, F y G
+![Ecuación por circunferencia](/assets/img/06_sol.jpeg)
+
+De lo anterior tenemos como resultado 2 ecuaciones:
+![Ecuación por circunferencia](/assets/img/07_sol.jpeg)
+
+Finalmente resolvemos por Determinantes o regla de Cramer para obtener las ecuaciones que nos permitirán conocer el punto X e Y donde se intecepta de la nave enemiga con los 3 satélites.
+![Ecuación por circunferencia](/assets/img/08_sol.jpeg)
