@@ -1,9 +1,9 @@
-# **Operación Fuego de Quasar**
+## a**Operación Fuego de Quasar**
 
 Han Solo ha sido recientemente nombrado General de la Alianza Rebelde y busca dar un golpe contra el Imperio Galáctico para reavivar la llama de la resistencia.
 El servicio de inteligencia rebelde ha detectado un llamado de auxilio de una nave portacarga imperial a la deriva en un campo de asteroides. El manifiesto de la nave es ultra clasificado, pero se rumorea que trasporta raciones y armamento para una legión entera.
 
-# **Desafío**
+## **Desafío**
 
 Como jefe de comunicaciones rebelde, tu misión es crear un programa en Golang que **retorne la fuente y contenido del mensaje de auxilio**. Para esto, cuentas con tres satélites que te permitirán triangular la posición, ¡pero cuidado! el mensaje puede no llegar completo a cada satélite debido al campo de asteroides frente a la nave.
 
@@ -13,7 +13,7 @@ Como jefe de comunicaciones rebelde, tu misión es crear un programa en Golang q
 - Skywalter: [100, -100]
 - Sato:      [500,  100]
 
-# **Nivel 1**
+## **Nivel 1**
 
 Crea un programa con las siguientes firmas:
 
@@ -38,3 +38,7 @@ Consideraciones:
     * Kenobi: ["", "este", "es", "un", "mensaje"]
     * Skywalker: ["este", "", "un", "mensaje"]
     * Sato: ["", "", "es", "", "mensaje"]
+
+## **Nivel 2**
+
+Crear una API REST, hostear esa API en un cloud computing libre (Google APP Engine, Amazon AWS, etc), crear el servicio /topsecret/ en donde se puede obtener la ubicación de la nave y el mensaje que emite.
