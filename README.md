@@ -42,3 +42,54 @@ Consideraciones:
 ## **Nivel 2**
 
 Crear una API REST, hostear esa API en un cloud computing libre (Google APP Engine, Amazon AWS, etc), crear el servicio /topsecret/ en donde se puede obtener la ubicación de la nave y el mensaje que emite.
+
+El servicio recibirá la información de la nave a través de un HTTP POST con un payload con el
+siguiente formato:
+
+POST → /topsecret/
+{
+"satellites": [
+{
+“name”: "kenobi",
+“distance”: 100.0,
+“message”: ["este", "", "", "mensaje", ""]
+},
+{
+“name”: "skywalker",
+“distance”: 115.5
+“message”: ["", "es", "", "", "secreto"]
+},
+{
+“name”: "sato",
+“distance”: 142.7
+“message”: ["este", "", "un", "", ""]
+}
+]
+}
+
+La respuesta, por otro lado, deberá tener la siguiente forma:
+RESPONSE CODE: 200
+{
+"position": {
+"x": -100.0,
+"y": 75.5
+},
+"message": "este es un mensaje secreto"
+}
+
+En caso que no se pueda determinar la posición o el mensaje, retorna:
+RESPONSE CODE: 404
+
+## **Nivel 2**
+
+Considerar que el mensaje ahora debe poder recibirse en diferentes POST al nuevo servicio
+/topsecret_split/ , respetando la misma firma que antes. Por ejemplo:
+POST → /topsecret_split/{satellite_name}
+```yaml{
+"distance": 100.0,
+"message": ["este", "", "", "mensaje", ""]
+}```
+Crear un nuevo servicio /topsecret_split/ que acepte POST y GET. En el GET l a
+respuesta deberá i ndicar l a posición y el mensaje en caso que sea posible determinarlo y tener
+la misma estructura del ejemplo del Nivel 2. Caso contrario, deberá responder un mensaje de
+error indicando que no hay suficiente información.
