@@ -14,10 +14,10 @@ Como jefe de comunicaciones rebelde, tu misión es crear un programa en Golang q
 # **Nivel 1**
 Crea un programa con las siguientes firmas:
 
-_* input: distancia al emisor tal cual se recibe en cada satélite
-_* output: las coordenadas 'x' e 'y' del emisor del mensaje*_
+*input: distancia al emisor tal cual se recibe en cada satélite
+*output: las coordenadas 'x' e 'y' del emisor del mensaje*
 **func GetLocation(distances ...float32) (x, y float32)**
 
-_* input: el mensaje tal cual se recibe en cada satélite
-_* output: el mensaje tal cual lo genera el emisor del mensaje*_
+*input: el mensaje tal cual se recibe en cada satélite
+*output: el mensaje tal cual lo genera el emisor del mensaje*
 **func GetMenssage(messages ...[]string) (msg string)**
