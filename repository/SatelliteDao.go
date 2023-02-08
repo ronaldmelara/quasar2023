@@ -19,3 +19,12 @@ func GetSatellites() []model.Satellite{
 	return satellites
 
 }
+
+func GetMessages()[]model.SatelliteMessage{
+	kenobiMsg := model.SatelliteMessage{Id: 1, Message: []string{"", "este", "es", "un", "mensaje"}}
+	skywalkerMsg := model.SatelliteMessage{Id: 2, Message: []string{"este", "", "un", "mensaje"}}
+	satoMsg := model.SatelliteMessage{Id: 2, Message: []string{"", "", "es", "", "mensaje"}}
+
+	messages := []model.SatelliteMessage{kenobiMsg, skywalkerMsg, satoMsg}
+	return messages
+}

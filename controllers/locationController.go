@@ -9,5 +9,9 @@ import (
 func Test(){
 	fmt.Println("Este es un tesst")
 	services.LocationImp()
-	services.GetLocation(2.3,56.0,300.1)
+	//x, y := services.GetLocation(538.57, 141.42, 509.90)
+
+	x, y := services.GetLocation(100.0, 115.5, 142.7)
+
+	fmt.Printf("x: %v - y: %v \n", x, y)
 }
