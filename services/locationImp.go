@@ -10,10 +10,6 @@ import (
 	"meliQuasar/util"
 )
 
-func LocationImp(){
-	
-}
-
 func GetLocation(distances ...float32)(x, y float32){
 	fmt.Println("Calculate Trilateration")
 	var lstSat []model.Satellite
@@ -23,7 +19,7 @@ func GetLocation(distances ...float32)(x, y float32){
 	_, err := checkLenDistanceList(lstSat, distances...)
 	if(err != nil){
 		fmt.Println(err)
-		//panic(err)
+		return
 	}
 
 	//distance Kenobi and Skywalter
@@ -73,13 +69,4 @@ func checkLenDistanceList(s []model.Satellite, arr ...float32) (string, error) {
 			Err: errors.New("Three distances are required"),
 		}
 	}
-}
-
-func GetMessage(messages ...[]string) []string{
-
-	for _, msgArr := range messages{
-		fmt.Println(msgArr)
-	} 
-
-	return []string{""}
 }
