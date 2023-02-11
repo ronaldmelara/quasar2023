@@ -10,16 +10,16 @@ import (
 	"meliQuasar/util"
 )
 
-func GetLocation(distances ...float32)(x, y float32){
+func GetLocation(distances ...float32)(float32, float32, error){
 	fmt.Println("Calculate Trilateration")
 	var lstSat []model.Satellite
 	lstSat = repository.GetSatellites()
 
 
-	_, err := checkLenDistanceList(lstSat, distances...)
+	err := validateDistances(lstSat, distances...)
 	if(err != nil){
-		fmt.Println(err)
-		return
+		
+		return 0.0,0.0,err
 	}
 
 	//distance Kenobi and Skywalter
@@ -53,20 +53,50 @@ func GetLocation(distances ...float32)(x, y float32){
 	var dx float32 = c*f-b*g
 	var dy float32 = a*g-c*e
 
+	d, er := checkDivisionByZero(d)
+
+	if er != nil{
+		return 0.0,0.0, er
+	}
 	var pointX = dx/d
 	var pointY = dy/d
 
-	return pointX,pointY
+	return pointX,pointY, nil
 }
 
-func checkLenDistanceList(s []model.Satellite, arr ...float32) (string, error) {
+func validateDistances(s []model.Satellite, arr ...float32) (error) {
 	log.Printf("Distances %v \n", arr)
-	if(len(arr) == len(s)){
-		return "", nil
-	}else{
-		return  "", &util.Exception{
+	totalSatellite := len(s)
+	var msgError string = ""
+
+	if(len(arr) != totalSatellite){
+		msgError = "The numbers of distances not match with the number of satellites"
+		return  &util.Exception{
 			StatusCode: 502,
-			Err: errors.New("Three distances are required"),
+			Err: errors.New(msgError),
 		}
 	}
+
+	for _ , x := range arr{
+		if x < 0{
+			msgError = "Distances must not be negative"
+			return  &util.Exception{
+				StatusCode: 502,
+				Err: errors.New(msgError),
+			}
+		}
+	}
+
+	return nil
+}
+
+func checkDivisionByZero(num float32) (float32, error) {
+	if num == 0{
+		return  0, &util.Exception{
+			StatusCode: 502,
+			Err : errors.New("Error by divison by zero"),
+		}
+	}
+	return num, nil
+	
 }
