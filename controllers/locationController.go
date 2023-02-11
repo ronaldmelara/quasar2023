@@ -22,5 +22,15 @@ func Test(){
 		[]string{"", "", "es", "", "mensaje"})
 	if er == nil{
 		fmt.Println(o)
+	}else{
+		fmt.Println(er)
 	}
+
+	/*o, er:= services.GetMessage(
+		[]string{})
+	if er == nil{
+		fmt.Println(o)
+	}else{
+		fmt.Println(er)
+	}*/
 }

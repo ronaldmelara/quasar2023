@@ -3,39 +3,46 @@ package services
 import (
 	"errors"
 	//"fmt"
+
+	//"fmt"
 	//"log"
-	"meliQuasar/model"
+	//"meliQuasar/model"
 	"meliQuasar/repository"
 	"meliQuasar/util"
 )
 
+func getMaxLength(totalSatellite int, ar ...[]string)(int, error){
+
+	maxSize := 0
+	sizeColl := len(ar)
+
+	if sizeColl == 0 || sizeColl < totalSatellite{
+		return  0, &util.Exception{
+			StatusCode: 502,
+			Err : errors.New("the number of messages does not match the number of satellites"),
+		}
+	}
+
+	for m:=0; m <len(ar); m++{
+		if (len(ar[m])>maxSize){
+			maxSize = len(ar[m])
+		}
+	}
+	return maxSize, nil
+}
+
+
+
 func GetMessage(messages ...[]string) ([]string, error){
 
-	var lstSat []model.Satellite
-	lstSat = repository.GetSatellites()
+	lstSat := repository.GetSatellites()
 
-	if len(messages) < len(lstSat){
-		return []string{""} , &util.Exception{
-			StatusCode: 502,
-			Err: errors.New("Three messages are required"),
-		}
+	maxSize, err := getMaxLength(len(lstSat), messages...)
+	if err != nil{
+		return []string{""}, err
 	}
-	var maxSize int
 
-	//saco el largo maximo de los mensajes recibidos
-	for m:=0; m <len(messages); m++{
-		if (len(messages[m])>maxSize){
-			maxSize = len(messages[m])
-		}
-	}
-	//igual largo a aquellos arreglos que sean mas cortos
-	for m:=0; m <len(messages); m++{
-		if (len(messages[m])<maxSize){
-			newArr := make([]string, maxSize-len(messages[m])) 
-
-			messages[m] = append(newArr,messages[m]...)
-		}
-	}
+	messages = matchLegth(maxSize, messages...)
 
 	
 	var t int = 0
@@ -51,7 +58,7 @@ func GetMessage(messages ...[]string) ([]string, error){
 	}
 
 
-	return messages[0],nil
+	return getUniqueValues(messages...),nil
 }
 
 func combinedCollection(col1, col2 []string) []string{
@@ -66,4 +73,36 @@ func combinedCollection(col1, col2 []string) []string{
 		}
 	}
 	return col2
+}
+
+func matchLegth(newSize int, ar ...[]string) [][]string{
+	for m:=0; m <len(ar); m++{
+		if (len(ar[m])< newSize){
+			ar[m] = append(ar[m], make([]string, newSize-len(ar[m]))... ) 
+		}
+	}
+	return ar
+}
+
+func getUniqueValues(ar ...[]string)[]string{
+	a:=make([]string, 1)
+
+	for x:= 0; x < len(ar); x++{
+		a = append(a, ar[x]...)
+	}
+
+	uniqueValues := make(map[string]bool)
+
+	for _, value := range a {
+		if len(value)>0{
+			uniqueValues[value] = true
+		}
+        
+    }
+
+	keys := make([]string, 0, len(uniqueValues))
+	for key := range uniqueValues {
+		keys = append(keys, key)
+	}
+    return keys
 }
