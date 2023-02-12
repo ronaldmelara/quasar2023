@@ -10,11 +10,14 @@ import (
 	"meliQuasar/util"
 )
 
+const MESSAGE_ERROR_NUM_DISTANCES string = "The numbers of distances not match with the number of satellites"
+const MESSAGE_ERROR_NUM_NEGATIVE string = "Distances must not be negative"
+const MESSAGE_ERROR_DIV_BY_ZERO string = "Error by divison by zero"
+
 func GetLocation(distances ...float32)(float32, float32, error){
 	fmt.Println("Calculate Trilateration")
 	var lstSat []model.Satellite
 	lstSat = repository.GetSatellites()
-
 
 	err := validateDistances(lstSat, distances...)
 	if(err != nil){
@@ -67,22 +70,19 @@ func GetLocation(distances ...float32)(float32, float32, error){
 func validateDistances(s []model.Satellite, arr ...float32) (error) {
 	log.Printf("Distances %v \n", arr)
 	totalSatellite := len(s)
-	var msgError string = ""
 
 	if(len(arr) != totalSatellite){
-		msgError = "The numbers of distances not match with the number of satellites"
 		return  &util.Exception{
 			StatusCode: 502,
-			Err: errors.New(msgError),
+			Err: errors.New(MESSAGE_ERROR_NUM_DISTANCES),
 		}
 	}
 
 	for _ , x := range arr{
 		if x < 0{
-			msgError = "Distances must not be negative"
 			return  &util.Exception{
 				StatusCode: 502,
-				Err: errors.New(msgError),
+				Err: errors.New(MESSAGE_ERROR_NUM_NEGATIVE),
 			}
 		}
 	}
@@ -94,7 +94,7 @@ func checkDivisionByZero(num float32) (float32, error) {
 	if num == 0{
 		return  0, &util.Exception{
 			StatusCode: 502,
-			Err : errors.New("Error by divison by zero"),
+			Err : errors.New(MESSAGE_ERROR_DIV_BY_ZERO),
 		}
 	}
 	return num, nil

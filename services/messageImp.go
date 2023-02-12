@@ -11,6 +11,8 @@ import (
 	"meliQuasar/util"
 )
 
+const MESSAGE_ERROR_MAX_LEN string = "the number of messages does not match the number of satellites"
+
 func getMaxLength(totalSatellite int, ar ...[]string)(int, error){
 
 	maxSize := 0
@@ -19,7 +21,7 @@ func getMaxLength(totalSatellite int, ar ...[]string)(int, error){
 	if sizeColl == 0 || sizeColl < totalSatellite{
 		return  0, &util.Exception{
 			StatusCode: 502,
-			Err : errors.New("the number of messages does not match the number of satellites"),
+			Err : errors.New(MESSAGE_ERROR_MAX_LEN),
 		}
 	}
 
@@ -30,8 +32,6 @@ func getMaxLength(totalSatellite int, ar ...[]string)(int, error){
 	}
 	return maxSize, nil
 }
-
-
 
 func GetMessage(messages ...[]string) ([]string, error){
 
@@ -44,7 +44,6 @@ func GetMessage(messages ...[]string) ([]string, error){
 
 	messages = matchLegth(maxSize, messages...)
 
-	
 	var t int = 0
 	for l:=0; l< len(messages);l++{
 		t++
@@ -53,11 +52,8 @@ func GetMessage(messages ...[]string) ([]string, error){
 			l++
 		}else{
 			messages[t] = combinedCollection(messages[l-1], messages[t])
-		}
-		
+		}	
 	}
-
-
 	return getUniqueValues(messages...),nil
 }
 
