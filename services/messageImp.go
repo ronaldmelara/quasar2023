@@ -2,11 +2,7 @@ package services
 
 import (
 	"errors"
-	//"fmt"
-
-	//"fmt"
-	//"log"
-	//"meliQuasar/model"
+	"sort"
 	"meliQuasar/repository"
 	"meliQuasar/util"
 )
@@ -49,11 +45,22 @@ func GetMessage(messages ...[]string) ([]string, error){
 		t++
 		if (l < len(messages)-1){
 			messages[l+1] = combinedCollection(messages[l], messages[l+1])
+			//messages[l] = combinedCollection(messages[l+1], messages[l])
 			l++
 		}else{
 			messages[t] = combinedCollection(messages[l-1], messages[t])
+			//messages[l-1] = combinedCollection(messages[t], messages[l-1])
 		}	
 	}
+
+	t =0
+	for l:=len(messages)-1; l>= 0;l--{
+		t++
+		messages[l] = combinedCollection(messages[len(messages)-1], messages[l])
+
+		
+	}
+
 	return getUniqueValues(messages...),nil
 }
 
@@ -63,7 +70,10 @@ func combinedCollection(col1, col2 []string) []string{
 	for i:=0; i < len(col1); i++{
 		if (j>= len(col2) || col1[i] != col2[i]){
 			//missing = append(missing, res1[i])
-			col2[i] = col1[i]
+			if len(col1[i]) > 0{
+				col2[i] = col1[i]
+			}
+			
 		}else{
 			j=j+1
 		}
@@ -84,21 +94,38 @@ func getUniqueValues(ar ...[]string)[]string{
 	a:=make([]string, 1)
 
 	for x:= 0; x < len(ar); x++{
-		a = append(a, ar[x]...)
+		if len(ar[x]) > 0{
+			a = append(a, ar[x]...)
+		}
+		
 	}
 
-	uniqueValues := make(map[string]bool)
+	uniqueValues := make(map[string]int)
 
-	for _, value := range a {
+	for idx, value := range a {
 		if len(value)>0{
-			uniqueValues[value] = true
+			uniqueValues[value] = idx
 		}
         
     }
 
-	keys := make([]string, 0, len(uniqueValues))
+	var keys []string
 	for key := range uniqueValues {
 		keys = append(keys, key)
 	}
-    return keys
+
+
+
+	// Ordena el slice utilizando sort.Slice
+	sort.Slice(keys, func(i, j int) bool {
+		return uniqueValues[keys[i]] < uniqueValues[keys[j]]
+	})
+
+
+
+	keysSorted := make([]string, 0, len(uniqueValues))
+	for _, key := range keys {
+		keysSorted = append(keysSorted, key)
+	}
+    return keysSorted
 }

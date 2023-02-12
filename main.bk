@@ -1,4 +1,4 @@
-/*package main
+package main
 
 import (
 	_"fmt"
@@ -9,4 +9,4 @@ func main(){
 	//fmt.Println("test")
 	controllers.Test();
 
-}*/
+}

@@ -2,12 +2,11 @@ package main
 
 import (
 	"encoding/json"
-	
-	_ "fmt"
+	"fmt"
 	"log"
-	"net/http"
-	_"io/ioutil"
+	"meliQuasar/controllers"
 	"meliQuasar/dto"
+	"net/http"
 )
 
 
@@ -27,22 +26,27 @@ func topsecret(w http.ResponseWriter, r *http.Request){
 		return
 	}
 
-	var request dto.TopSecret
+	var rq dto.TopSecret
 	
-	err := json.NewDecoder(r.Body).Decode(&request)
+	err := json.NewDecoder(r.Body).Decode(&rq)
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest)
 		return
 	}
 
 	// procesa los datos de la solicitud aquí
-	log.Printf("Received data: %v", request.Satellites)
+	//log.Printf("Received data: %v", request.Satellites)
 
-	response := dto.ResponseTopSecret{
-		Message: "Solicitud procesada exitosamente",
+	result, err := controllers.GetTopSecret(rq)
+
+	if err != nil{
+		fmt.Println(err)
+		w.WriteHeader(http.StatusNotFound)
+	}else{
+		w.WriteHeader(http.StatusOK)
+		json.NewEncoder(w).Encode(result)
 	}
 
-	w.WriteHeader(http.StatusOK)
-	json.NewEncoder(w).Encode(response)
+	
 	
 }

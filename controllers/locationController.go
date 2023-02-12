@@ -23,9 +23,9 @@ func Test(){
 
 
 	o, er:= services.GetMessage(
-		[]string{"", "este", "es", "un", "mensaje"},
-		[]string{"este", "", "un", "mensaje"},
-		[]string{"", "", "es", "", "mensaje"})
+		[]string{"este", "", "", "mensaje", ""},
+		[]string{"", "es", "", "","secreto"},
+		[]string{"este", "", "un", "", ""})
 	if er == nil{
 		fmt.Println(o)
 	}else{

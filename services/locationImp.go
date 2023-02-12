@@ -8,6 +8,7 @@ import (
 	"meliQuasar/model"
 	"meliQuasar/repository"
 	"meliQuasar/util"
+	"strings"
 )
 
 const MESSAGE_ERROR_NUM_DISTANCES string = "The numbers of distances not match with the number of satellites"
@@ -65,6 +66,18 @@ func GetLocation(distances ...float32)(float32, float32, error){
 	var pointY = dy/d
 
 	return pointX,pointY, nil
+}
+
+func CheckExistsSatellite(name string) bool{
+	var lstSat []model.Satellite
+	lstSat = repository.GetSatellites()
+
+	for _, v := range lstSat{
+		if strings.ToLower(v.Name) == strings.TrimSpace(strings.ToLower(name)){
+			return true
+		}
+	}
+	return false
 }
 
 func validateDistances(s []model.Satellite, arr ...float32) (error) {
