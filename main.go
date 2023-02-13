@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"log"
+	"strings"
 	"meliQuasar/controllers"
 	"meliQuasar/dto"
 	"net/http"
@@ -12,6 +13,7 @@ import (
 
 func main(){
 	http.HandleFunc("/", topsecret)
+	http.HandleFunc("/topsecret_split/", getSatellite)
 	//fmt.Println("test")
 	//controllers.Test();
 
@@ -46,7 +48,42 @@ func topsecret(w http.ResponseWriter, r *http.Request){
 		w.WriteHeader(http.StatusOK)
 		json.NewEncoder(w).Encode(result)
 	}
+}
 
-	
+func getSatellite(w http.ResponseWriter, r *http.Request){
+
+	// Verificamos que sea una petición POST o GET
+	if r.Method == http.MethodPost || r.Method == http.MethodGet {
+
+		id := strings.TrimPrefix(r.URL.Path, "/topsecret_split/")
+		//path := strings.Split(r.URL.Path, "/")
+		fmt.Println(len(id))
+		if len(id) <= 0 {
+			http.Error(w, "Bad Request", http.StatusBadRequest)
+			return
+		}
+
+		var rq dto.Entry
+		err := json.NewDecoder(r.Body).Decode(&rq)
+		if err != nil {
+			w.WriteHeader(http.StatusBadRequest)
+			return
+		}
+
+		rq.Name = id
+		
+		result, err := controllers.GetTopSecretSplit(rq)
+
+		if err != nil{
+			fmt.Println(err)
+			w.WriteHeader(http.StatusNotFound)
+		}else{
+			w.WriteHeader(http.StatusOK)
+			json.NewEncoder(w).Encode(result)
+		}
+
+		//satelliteName := id
+		//fmt.Fprintf(w, "Top secret information about satellite %s", satelliteName)
+	}
 	
 }

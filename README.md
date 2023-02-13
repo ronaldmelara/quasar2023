@@ -8,6 +8,7 @@
 - [2. **Solución**](#2-solución)
     - [2.1 **Localización**](#21-localización)
     - [2.2 **Mensaje**](#22-mensaje)
+- [3. **Documnetación Referencial**](#3-documnetación-referencial)
 
 <!-- /TOC -->
 
@@ -160,5 +161,13 @@ Finalmente resolvemos por Determinantes o regla de Cramer para obtener las ecuac
 
 
 ## 2.2 **Mensaje**
-El problema del mensaje es una solución simple, ya que implica unicamente hacer un **merge** de los 3 arrays que contiene cada satélite. Según se indica que debido al defase de la señal puede que algunas palabras no lleguen al satélite pero queda registrado como un input vacío, lo cual hará que en cada satélite existan 3 colecciones del mismo largo, permitiendo asi el merge.
-De no poderse mezclar o desencriptar el mensaje se deberá enviar un error.
+El problema del mensaje implica hacer un **merge** de los 3 arrays del mensaje que ha recibido cada satélite. Según se indica que debido al defase de la señal puede que algunas palabras no lleguen al satélite pero queda registrado como un input vacío, lo cual hará que en cada satélite existan 3 colecciones del mismo largo, permitiendo asi el merge y posterior obtener los valores unicos que desifrarán el mensaje.
+
+# 3. **Documnetación Referencial**
+Youtube
+- How does GPS work? https://www.youtube.com/watch?v=FU_pY2sTwTA&t=22s
+- Trilateración vs Triangulación https://www.youtube.com/watch?v=WzCXNIDbw7w&t=256s
+- How Does Your GPS Device Know Where You Are? https://www.youtube.com/watch?v=4fXjc9uibGM
+- Intersección de dos circunferencias https://www.youtube.com/watch?v=_BhsWxtGDog
+- Golang https://www.golangprograms.com
+

@@ -14,6 +14,7 @@ import (
 const MESSAGE_ERROR_NUM_DISTANCES string = "The numbers of distances not match with the number of satellites"
 const MESSAGE_ERROR_NUM_NEGATIVE string = "Distances must not be negative"
 const MESSAGE_ERROR_DIV_BY_ZERO string = "Error by divison by zero"
+const MESSAGE_ERROR_DISTANCE_SAT string = "The distance entered is outside the radius of the satellite"
 
 func GetLocation(distances ...float32)(float32, float32, error){
 	fmt.Println("Calculate Trilateration")
@@ -68,16 +69,16 @@ func GetLocation(distances ...float32)(float32, float32, error){
 	return pointX,pointY, nil
 }
 
-func CheckExistsSatellite(name string) bool{
+func CheckExistsSatellite(name string) (bool, model.Satellite){
 	var lstSat []model.Satellite
 	lstSat = repository.GetSatellites()
 
 	for _, v := range lstSat{
 		if strings.ToLower(v.Name) == strings.TrimSpace(strings.ToLower(name)){
-			return true
+			return true, v
 		}
 	}
-	return false
+	return false, model.Satellite{}
 }
 
 func validateDistances(s []model.Satellite, arr ...float32) (error) {
@@ -112,4 +113,21 @@ func checkDivisionByZero(num float32) (float32, error) {
 	}
 	return num, nil
 	
+}
+
+func CheckDistanceVsRadiusRange(distance float32, satellite model.Satellite)(bool,error){
+
+	radio := math.Sqrt(math.Pow(float64(0.0-satellite.X),2) + math.Pow(float64(0.0-satellite.Y),2))
+
+	fmt.Println(radio)
+	
+	if distance >= 0 && distance <= float32(radio){
+		return true,nil
+
+	}else{
+		return  false, &util.Exception{
+			StatusCode: 502,
+			Err : errors.New(MESSAGE_ERROR_DISTANCE_SAT),
+		}
+	}
 }
