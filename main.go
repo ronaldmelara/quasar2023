@@ -12,19 +12,14 @@ import (
 	httpSwagger "github.com/swaggo/http-swagger"
 )
 
-// @title           API Operación Fuego de Quasar
+// @title           API Operación Fuego de Quasar - MELI
 // @version         1.0
-// @description     Esta API corresponde al desarrollo del desafío tecnico a desarrollar en GO
-// @termsOfService  http://swagger.io/terms/
+// @description     Esta API corresponde al desarrollo planteado para el desafío técnico de Mercado Libre. La API REST ha sido desarrollada en GO. Es posible ver visualizar el código alojado en el github https://github.com/ronaldmelara/quasar2023
 
-// @contact.name   API Support
-// @contact.url    http://www.swagger.io/support
-// @contact.email  support@swagger.io
+// @contact.name   Ronald Melara
+// @contact.email  ronald.melara@gmail.com
 
-// @license.name  Apache 2.0
-// @license.url   http://www.apache.org/licenses/LICENSE-2.0.html
-
-// @host      localhost:8080
+// @host      quasar2023-jnswrwco3q-uc.a.run.app
 // @BasePath  /api/v1
 
 // @securityDefinitions.basic  BasicAuth
@@ -44,8 +39,8 @@ func main(){
 }
 
 // topsecret godoc
-// @Summary      Get position and message 
-// @Description  Obtains the position of the enemy ship and deciphers the message received on the satellites
+// @Summary      Cálculo de Trilateración y Decifrar mensaje 
+// @Description  Este servicio permite calcular la trilateración de la nave enemiga en base a las 3 posiciones de los satélites, la distancia del objecto (nave enemiga) a cada satélite. Adicional, realiza un merge de cada fragmento de los mensajes recepcionado en cada satélite para entregarlo en un unico mensaje.
 // @Tags         TopSecret
 // @Accept       json
 // @Produce      json
@@ -64,6 +59,7 @@ func topsecret(w http.ResponseWriter, r *http.Request){
 	err := json.NewDecoder(r.Body).Decode(&rq)
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest)
+		fmt.Println(err)
 		return
 	}
 
@@ -74,7 +70,8 @@ func topsecret(w http.ResponseWriter, r *http.Request){
 
 	if err != nil{
 		fmt.Println(err)
-		w.WriteHeader(http.StatusNotFound)
+		w.WriteHeader(http.StatusBadRequest)
+		json.NewEncoder(w).Encode(err.Error())
 	}else{
 		w.WriteHeader(http.StatusOK)
 		json.NewEncoder(w).Encode(result)
@@ -83,8 +80,8 @@ func topsecret(w http.ResponseWriter, r *http.Request){
 
 
 // topsecret_split godoc
-// @Summary      Get position and message for a specific satellite
-// @Description  Obtains the position of the enemy ship and deciphers the message received on the satellites
+// @Summary      Obtener la información de un satélite en particular
+// @Description  Enviando el nombre de un satélite se puede obtener la posición donde se encuentra en el plano.
 // @Tags         TopSecretSplit
 // @Accept       json
 // @Produce      json
@@ -120,8 +117,8 @@ func getSatelliteGet(w http.ResponseWriter, r *http.Request){
 }
 
 // topsecret_split godoc
-// @Summary      Get position and message for a specific satellite
-// @Description  Obtains the position of the enemy ship and deciphers the message received on the satellites
+// @Summary      Obtener la información de un satélite en particular y su mensaje
+// @Description  Enviando el nombre de un satélite, mas la distancia se puede obtener la posición donde se encuentra en el plano y saber si la distancia ingresada se encuentra en el radio de alcance del satélite.
 // @Tags         TopSecretSplit
 // @Accept       json
 // @Produce      json
@@ -152,7 +149,7 @@ func getSatellitePost(w http.ResponseWriter, r *http.Request){
 		result, err := controllers.GetTopSecretSplit(rq)
 
 		if err != nil{
-			w.WriteHeader(http.StatusNotFound)
+			w.WriteHeader(http.StatusBadRequest)
 			json.NewEncoder(w).Encode(err.Error())
 		}else{
 			w.WriteHeader(http.StatusOK)

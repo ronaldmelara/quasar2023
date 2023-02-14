@@ -32,71 +32,24 @@ definitions:
           $ref: '#/definitions/dto.Entry'
         type: array
     type: object
-host: localhost:8080
+host: quasar2023-jnswrwco3q-uc.a.run.app
 info:
   contact:
-    email: support@swagger.io
-    name: API Support
-    url: http://www.swagger.io/support
-  description: Esta API corresponde al desarrollo del desafío tecnico a desarrollar
-    en GO
-  license:
-    name: Apache 2.0
-    url: http://www.apache.org/licenses/LICENSE-2.0.html
-  termsOfService: http://swagger.io/terms/
-  title: API Operación Fuego de Quasar
+    email: ronald.melara@gmail.com
+    name: Ronald Melara
+  description: Esta API corresponde al desarrollo planteado para el desafío técnico
+    de Mercado Libre. La API REST ha sido desarrollada en GO. Es posible ver visualizar
+    el código alojado en el github https://github.com/ronaldmelara/quasar2023
+  title: API Operación Fuego de Quasar - MELI
   version: "1.0"
 paths:
-  /topsecret/:
+  /p/topsecret_split/{satellite_name}:
     post:
       consumes:
       - application/json
-      description: Obtains the position of the enemy ship and deciphers the message
-        received on the satellites
-      parameters:
-      - description: Se debe enviar por el body la siguiente estructura JSON
-        in: body
-        name: Body
-        required: true
-        schema:
-          $ref: '#/definitions/dto.TopSecret'
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/dto.ResponseTopSecret'
-      summary: Get position and message
-      tags:
-      - TopSecret
-  /topsecret_split/{satellite_name}:
-    get:
-      consumes:
-      - application/json
-      description: Obtains the position of the enemy ship and deciphers the message
-        received on the satellites
-      parameters:
-      - description: Nombre del Satélite
-        in: path
-        name: satellite_name
-        required: true
-        type: string
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/dto.ResponseTopSecret'
-      summary: Get position and message for a specific satellite
-      tags:
-      - TopSecretSplit
-    post:
-      consumes:
-      - application/json
-      description: Obtains the position of the enemy ship and deciphers the message
-        received on the satellites
+      description: Enviando el nombre de un satélite, mas la distancia se puede obtener
+        la posición donde se encuentra en el plano y saber si la distancia ingresada
+        se encuentra en el radio de alcance del satélite.
       parameters:
       - description: Nombre del Satélite
         in: path
@@ -116,7 +69,54 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/dto.ResponseTopSecret'
-      summary: Get position and message for a specific satellite
+      summary: Obtener la información de un satélite en particular y su mensaje
+      tags:
+      - TopSecretSplit
+  /topsecret/:
+    post:
+      consumes:
+      - application/json
+      description: Este servicio permite calcular la trilateración de la nave enemiga
+        en base a las 3 posiciones de los satélites, la distancia del objecto (nave
+        enemiga) a cada satélite. Adicional, realiza un merge de cada fragmento de
+        los mensajes recepcionado en cada satélite para entregarlo en un unico mensaje.
+      parameters:
+      - description: Se debe enviar por el body la siguiente estructura JSON
+        in: body
+        name: Body
+        required: true
+        schema:
+          $ref: '#/definitions/dto.TopSecret'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dto.ResponseTopSecret'
+      summary: Cálculo de Trilateración y Decifrar mensaje
+      tags:
+      - TopSecret
+  /topsecret_split/{satellite_name}:
+    get:
+      consumes:
+      - application/json
+      description: Enviando el nombre de un satélite se puede obtener la posición
+        donde se encuentra en el plano.
+      parameters:
+      - description: Nombre del Satélite
+        in: path
+        name: satellite_name
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dto.ResponseTopSecret'
+      summary: Obtener la información de un satélite en particular
       tags:
       - TopSecretSplit
 securityDefinitions:

@@ -9,24 +9,59 @@ const docTemplate = `{
     "info": {
         "description": "{{escape .Description}}",
         "title": "{{.Title}}",
-        "termsOfService": "http://swagger.io/terms/",
         "contact": {
-            "name": "API Support",
-            "url": "http://www.swagger.io/support",
-            "email": "support@swagger.io"
-        },
-        "license": {
-            "name": "Apache 2.0",
-            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+            "name": "Ronald Melara",
+            "email": "ronald.melara@gmail.com"
         },
         "version": "{{.Version}}"
     },
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
+        "/p/topsecret_split/{satellite_name}": {
+            "post": {
+                "description": "Enviando el nombre de un satélite, mas la distancia se puede obtener la posición donde se encuentra en el plano y saber si la distancia ingresada se encuentra en el radio de alcance del satélite.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "TopSecretSplit"
+                ],
+                "summary": "Obtener la información de un satélite en particular y su mensaje",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Nombre del Satélite",
+                        "name": "satellite_name",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Distancia de la nave enemiga",
+                        "name": "Data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/dto.TopSecret"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/dto.ResponseTopSecret"
+                        }
+                    }
+                }
+            }
+        },
         "/topsecret/": {
             "post": {
-                "description": "Obtains the position of the enemy ship and deciphers the message received on the satellites",
+                "description": "Este servicio permite calcular la trilateración de la nave enemiga en base a las 3 posiciones de los satélites, la distancia del objecto (nave enemiga) a cada satélite. Adicional, realiza un merge de cada fragmento de los mensajes recepcionado en cada satélite para entregarlo en un unico mensaje.",
                 "consumes": [
                     "application/json"
                 ],
@@ -36,7 +71,7 @@ const docTemplate = `{
                 "tags": [
                     "TopSecret"
                 ],
-                "summary": "Get position and message",
+                "summary": "Cálculo de Trilateración y Decifrar mensaje",
                 "parameters": [
                     {
                         "description": "Se debe enviar por el body la siguiente estructura JSON",
@@ -60,7 +95,7 @@ const docTemplate = `{
         },
         "/topsecret_split/{satellite_name}": {
             "get": {
-                "description": "Obtains the position of the enemy ship and deciphers the message received on the satellites",
+                "description": "Enviando el nombre de un satélite se puede obtener la posición donde se encuentra en el plano.",
                 "consumes": [
                     "application/json"
                 ],
@@ -70,7 +105,7 @@ const docTemplate = `{
                 "tags": [
                     "TopSecretSplit"
                 ],
-                "summary": "Get position and message for a specific satellite",
+                "summary": "Obtener la información de un satélite en particular",
                 "parameters": [
                     {
                         "type": "string",
@@ -78,45 +113,6 @@ const docTemplate = `{
                         "name": "satellite_name",
                         "in": "path",
                         "required": true
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/dto.ResponseTopSecret"
-                        }
-                    }
-                }
-            },
-            "post": {
-                "description": "Obtains the position of the enemy ship and deciphers the message received on the satellites",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "TopSecretSplit"
-                ],
-                "summary": "Get position and message for a specific satellite",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "Nombre del Satélite",
-                        "name": "satellite_name",
-                        "in": "path",
-                        "required": true
-                    },
-                    {
-                        "description": "Distancia de la nave enemiga",
-                        "name": "Data",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/dto.TopSecret"
-                        }
                     }
                 ],
                 "responses": {
@@ -192,11 +188,11 @@ const docTemplate = `{
 // SwaggerInfo holds exported Swagger Info so clients can modify it
 var SwaggerInfo = &swag.Spec{
 	Version:          "1.0",
-	Host:             "localhost:8080",
+	Host:             "quasar2023-jnswrwco3q-uc.a.run.app",
 	BasePath:         "/api/v1",
 	Schemes:          []string{},
-	Title:            "API Operación Fuego de Quasar",
-	Description:      "Esta API corresponde al desarrollo del desafío tecnico a desarrollar en GO",
+	Title:            "API Operación Fuego de Quasar - MELI",
+	Description:      "Esta API corresponde al desarrollo planteado para el desafío técnico de Mercado Libre. La API REST ha sido desarrollada en GO. Es posible ver visualizar el código alojado en el github https://github.com/ronaldmelara/quasar2023",
 	InfoInstanceName: "swagger",
 	SwaggerTemplate:  docTemplate,
 }
