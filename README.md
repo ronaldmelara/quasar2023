@@ -8,7 +8,8 @@
 - [2. **Solución**](#2-solución)
     - [2.1 **Localización**](#21-localización)
     - [2.2 **Mensaje**](#22-mensaje)
-- [3. **Documnetación Referencial**](#3-documnetación-referencial)
+- [3. Servicios disponibles](#3-servicios-disponibles)
+- [4. **Documnetación Referencial**](#4-documnetación-referencial)
 
 <!-- /TOC -->
 
@@ -167,7 +168,19 @@ Para solucionar la llamada al servicio /topsecret_split/ del Nivel 3, suceden 2 
 ## 2.2 **Mensaje**
 El problema del mensaje implica hacer un **merge** de los 3 arrays del mensaje que ha recibido cada satélite. Según se indica que debido al defase de la señal puede que algunas palabras no lleguen al satélite pero queda registrado como un input vacío, lo cual hará que en cada satélite existan 3 colecciones del mismo largo, permitiendo asi el merge y posterior obtener los valores unicos que desifrarán el mensaje.
 
-# 3. **Documnetación Referencial**
+# 3. Servicios disponibles
+La API fue alojada en un cloud de google, y cuenta con 3 servicios disponibles para ser consumidos. Adicional se incorporó Swagger para poder facilitar la documentación de cada uno de ellos. A continuación estas son las URL:
+
+- Swagger: https://quasar2023-jnswrwco3q-uc.a.run.app/swagger/
+
+| Método | Servicio | URL |
+| ----------- | ------------- | ------------- | 
+| POST   | /topsecret/        | https://quasar2023-jnswrwco3q-uc.a.run.app/api/v1/topsecret/ |
+| GET    | /topsecret_split/{satellite_name}    | https://quasar2023-jnswrwco3q-uc.a.run.app/api/v1/topsecret_split/{satellite_name} |
+| POST   | /p/topsecret_split/{satellite_name}  | https://quasar2023-jnswrwco3q-uc.a.run.app/api/v1/p/topsecret_split/{satellite_name} |
+
+
+# 4. **Documnetación Referencial**
 Youtube
 - How does GPS work? https://www.youtube.com/watch?v=FU_pY2sTwTA&t=22s
 - Trilateración vs Triangulación https://www.youtube.com/watch?v=WzCXNIDbw7w&t=256s
