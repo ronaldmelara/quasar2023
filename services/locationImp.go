@@ -118,8 +118,6 @@ func checkDivisionByZero(num float32) (float32, error) {
 func CheckDistanceVsRadiusRange(distance float32, satellite model.Satellite)(bool,error){
 
 	radio := math.Sqrt(math.Pow(float64(0.0-satellite.X),2) + math.Pow(float64(0.0-satellite.Y),2))
-
-	fmt.Println(radio)
 	
 	if distance >= 0 && distance <= float32(radio){
 		return true,nil

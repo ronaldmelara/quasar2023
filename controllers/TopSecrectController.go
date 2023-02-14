@@ -37,7 +37,6 @@ func GetTopSecret(rq dto.TopSecret)(dto.ResponseTopSecret, error){
 	resp.Position.X = x
 	resp.Position.Y = y
 
-	fmt.Println(messages)
 	m, er:= services.GetMessage(messages...)
 	if er != nil{
 		return dto.ResponseTopSecret{}  ,  er
@@ -59,7 +58,6 @@ func GetTopSecretSplit(rq dto.Entry)(dto.ResponseTopSecret, error){
 			Err : errors.New(msgErr),
 		}
 	}
-	fmt.Println(s)
 
 	isOk, err := services.CheckDistanceVsRadiusRange(rq.Distance, s)
 

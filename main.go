@@ -95,10 +95,7 @@ func getSatelliteGet(w http.ResponseWriter, r *http.Request){
 
 	id := strings.TrimPrefix(r.URL.Path, "/api/v1/topsecret_split/")
 
-	
-	fmt.Println(id)
-		
-	//path := strings.Split(r.URL.Path, "/")
+
 	fmt.Println(len(id))
 	if len(id) <= 0 {
 		http.Error(w, "Bad Request", http.StatusBadRequest)
@@ -107,18 +104,18 @@ func getSatelliteGet(w http.ResponseWriter, r *http.Request){
 
 	
 	if r.Method == http.MethodGet{
-		
-
 		result, err := controllers.GetTopSecretSplitByName(id)
 
 		if err != nil{
-			//fmt.Println(err)
 			w.WriteHeader(http.StatusNotFound)
 			json.NewEncoder(w).Encode(err.Error())
 		}else{
 			w.WriteHeader(http.StatusOK)
 			json.NewEncoder(w).Encode(result)
 		}
+	}else{
+		w.WriteHeader(http.StatusMethodNotAllowed)
+		return
 	}	
 }
 
@@ -155,7 +152,6 @@ func getSatellitePost(w http.ResponseWriter, r *http.Request){
 		result, err := controllers.GetTopSecretSplit(rq)
 
 		if err != nil{
-			fmt.Println(err)
 			w.WriteHeader(http.StatusNotFound)
 			json.NewEncoder(w).Encode(err.Error())
 		}else{
@@ -163,6 +159,9 @@ func getSatellitePost(w http.ResponseWriter, r *http.Request){
 			json.NewEncoder(w).Encode(result)
 		}
 
+	}else{
+		w.WriteHeader(http.StatusMethodNotAllowed)
+		return
 	}
 	
 }

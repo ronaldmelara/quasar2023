@@ -126,7 +126,7 @@ error indicando que no hay suficiente información.
 
 ## 2.1 **Localización**
 
-Para resolver el punto de GetLocation es necesario poder entender y aplicar el concepto de **"Trilateración"**. La definición nos dice que es una **técnica geométrica para determinar la posición de un objecto conociendo su distancia a tres puntos de referencia**.
+Para resolver los niveles 1 y 2, es necesario poder entender y aplicar el concepto de **"Trilateración"**. La definición nos dice que es una **técnica geométrica para determinar la posición de un objecto conociendo su distancia a tres puntos de referencia**.
 Para poder calcular la posición del objecto en estudio se requiere tener las posicion X e Y del Punto 1 (P1), Punto 2 (P2) y Punto 3(P3) y que cada punto es el centro de una circunferencia. Además, se necesita el radio o distancia desde el centro de cada circunferencia hacia el borde de esta, el cual es el lugar donde se encuentra nuestro objecto a estudiar. Ahora, hay que imaginar que estas 3 circunferencias convergen en un punto, el cual indica el lugar en el espacio donde se encuentra nuestro objecto a estudiar.
 ![Imagen circunferencias](/assets/img/01_sol.jpeg)
 
@@ -159,6 +159,10 @@ De lo anterior tenemos como resultado 2 ecuaciones:
 Finalmente resolvemos por Determinantes o regla de Cramer para obtener las ecuaciones que nos permitirán conocer el punto X e Y donde se intecepta de la nave enemiga con los 3 satélites.
 ![Ecuación por circunferencia](/assets/img/08_sol.jpeg)
 
+
+Para solucionar la llamada al servicio /topsecret_split/ del Nivel 3, suceden 2 variables:
+- Cuando es una llamada POST, al recibir la información de la distancia y el mensaje, es posible validar que la distancia ingresada está dentro del radio de alcance del satélite. Para ello utilizaremos los puntos (x,y) de la posición del satélite (que consideraremos como borde de la cirunferencia) y el punto (0,0) como punto inicial, quedando nuestra formular asi: **radio := √(0.0-X)^2 + (0.0-Y)^2)**. De esta manera sabremos si la distancia ingresada esta en el radio de alcance del satélite.
+- Cuando es llamda GET, al no tener mucha información solamente sera posible obtener la posición del satélite o en su defecto de no encontrarse o no existir se emite un error.
 
 ## 2.2 **Mensaje**
 El problema del mensaje implica hacer un **merge** de los 3 arrays del mensaje que ha recibido cada satélite. Según se indica que debido al defase de la señal puede que algunas palabras no lleguen al satélite pero queda registrado como un input vacío, lo cual hará que en cada satélite existan 3 colecciones del mismo largo, permitiendo asi el merge y posterior obtener los valores unicos que desifrarán el mensaje.
