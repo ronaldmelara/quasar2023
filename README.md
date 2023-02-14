@@ -167,7 +167,9 @@ El problema del mensaje implica hacer un **merge** de los 3 arrays del mensaje q
 Youtube
 - How does GPS work? https://www.youtube.com/watch?v=FU_pY2sTwTA&t=22s
 - Trilateración vs Triangulación https://www.youtube.com/watch?v=WzCXNIDbw7w&t=256s
+- Trilateración (PDF file), Autor Mauricio Gende e Ivana Molina from academia.edu
 - How Does Your GPS Device Know Where You Are? https://www.youtube.com/watch?v=4fXjc9uibGM
 - Intersección de dos circunferencias https://www.youtube.com/watch?v=_BhsWxtGDog
 - Golang https://www.golangprograms.com
-
+- Google Cloud (onboarding) https://cloud.google.com/run/docs/quickstarts/build-and-deploy/deploy-go-service?hl=es-419
+- Google Cloud CLI https://cloud.google.com/sdk/docs/install?hl=es-419

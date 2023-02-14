@@ -1,0 +1,125 @@
+basePath: /api/v1
+definitions:
+  dto.Entry:
+    properties:
+      distance:
+        type: number
+      message:
+        items:
+          type: string
+        type: array
+      name:
+        type: string
+    type: object
+  dto.Position:
+    properties:
+      x:
+        type: number
+      "y":
+        type: number
+    type: object
+  dto.ResponseTopSecret:
+    properties:
+      message:
+        type: string
+      position:
+        $ref: '#/definitions/dto.Position'
+    type: object
+  dto.TopSecret:
+    properties:
+      satellites:
+        items:
+          $ref: '#/definitions/dto.Entry'
+        type: array
+    type: object
+host: localhost:8080
+info:
+  contact:
+    email: support@swagger.io
+    name: API Support
+    url: http://www.swagger.io/support
+  description: Esta API corresponde al desarrollo del desafío tecnico a desarrollar
+    en GO
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  termsOfService: http://swagger.io/terms/
+  title: API Operación Fuego de Quasar
+  version: "1.0"
+paths:
+  /topsecret/:
+    post:
+      consumes:
+      - application/json
+      description: Obtains the position of the enemy ship and deciphers the message
+        received on the satellites
+      parameters:
+      - description: Se debe enviar por el body la siguiente estructura JSON
+        in: body
+        name: Body
+        required: true
+        schema:
+          $ref: '#/definitions/dto.TopSecret'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dto.ResponseTopSecret'
+      summary: Get position and message
+      tags:
+      - TopSecret
+  /topsecret_split/{satellite_name}:
+    get:
+      consumes:
+      - application/json
+      description: Obtains the position of the enemy ship and deciphers the message
+        received on the satellites
+      parameters:
+      - description: Nombre del Satélite
+        in: path
+        name: satellite_name
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dto.ResponseTopSecret'
+      summary: Get position and message for a specific satellite
+      tags:
+      - TopSecretSplit
+    post:
+      consumes:
+      - application/json
+      description: Obtains the position of the enemy ship and deciphers the message
+        received on the satellites
+      parameters:
+      - description: Nombre del Satélite
+        in: path
+        name: satellite_name
+        required: true
+        type: string
+      - description: Distancia de la nave enemiga
+        in: body
+        name: Data
+        required: true
+        schema:
+          $ref: '#/definitions/dto.TopSecret'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dto.ResponseTopSecret'
+      summary: Get position and message for a specific satellite
+      tags:
+      - TopSecretSplit
+securityDefinitions:
+  BasicAuth:
+    type: basic
+swagger: "2.0"
