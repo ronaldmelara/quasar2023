@@ -8,8 +8,9 @@
 - [2. **Solución**](#2-solución)
     - [2.1 **Localización**](#21-localización)
     - [2.2 **Mensaje**](#22-mensaje)
-- [3. Servicios disponibles](#3-servicios-disponibles)
-- [4. **Documnetación Referencial**](#4-documnetación-referencial)
+- [3. **Servicios disponibles**](#3-servicios-disponibles)
+- [4. **Buenas prácticas/Diseño**](#4-buenas-prácticasdiseño)
+- [5. **Documnetación Referencial**](#5-documnetación-referencial)
 
 <!-- /TOC -->
 
@@ -163,12 +164,12 @@ Finalmente resolvemos por Determinantes o regla de Cramer para obtener las ecuac
 
 Para solucionar la llamada al servicio /topsecret_split/ del Nivel 3, suceden 2 variables:
 - Cuando es una llamada POST, al recibir la información de la distancia y el mensaje, es posible validar que la distancia ingresada está dentro del radio de alcance del satélite. Para ello utilizaremos los puntos (x,y) de la posición del satélite (que consideraremos como borde de la cirunferencia) y el punto (0,0) como punto inicial, quedando nuestra formular asi: **radio := √(0.0-X)^2 + (0.0-Y)^2)**. De esta manera sabremos si la distancia ingresada esta en el radio de alcance del satélite.
-- Cuando es llamda GET, al no tener mucha información solamente sera posible obtener la posición del satélite o en su defecto de no encontrarse o no existir se emite un error.
+- Cuando es llamda GET, al recibir solamente el nombre del satélite a buscar, el servicio devuelve la posición del satélite y el mensaje recibido exclusivamente a ese satélite.
 
 ## 2.2 **Mensaje**
 El problema del mensaje implica hacer un **merge** de los 3 arrays del mensaje que ha recibido cada satélite. Según se indica que debido al defase de la señal puede que algunas palabras no lleguen al satélite pero queda registrado como un input vacío, lo cual hará que en cada satélite existan 3 colecciones del mismo largo, permitiendo asi el merge y posterior obtener los valores unicos que desifrarán el mensaje.
 
-# 3. Servicios disponibles
+# 3. **Servicios disponibles**
 La API fue alojada en un cloud de google, y cuenta con 3 servicios disponibles para ser consumidos. Adicional se incorporó Swagger para poder facilitar la documentación de cada uno de ellos. A continuación estas son las URL:
 
 - Swagger: https://quasar2023-jnswrwco3q-uc.a.run.app/swagger/
@@ -179,8 +180,22 @@ La API fue alojada en un cloud de google, y cuenta con 3 servicios disponibles p
 | GET    | /topsecret_split/{satellite_name}    | https://quasar2023-jnswrwco3q-uc.a.run.app/api/v1/topsecret_split/{satellite_name} |
 | POST   | /p/topsecret_split/{satellite_name}  | https://quasar2023-jnswrwco3q-uc.a.run.app/api/v1/p/topsecret_split/{satellite_name} |
 
+# 4. **Buenas prácticas/Diseño**
+El aplicativo fue creado utilizando las siguientes capas:
+- Controlllers: Funciones que arman los set datos a mostrar en la vista con respecto a lo entregado por el "Services"
+- Services: Funciones que utilizan el repositorio para obtener o modificar datos, y además aplican logica de negocio
+- Repository: métodos y funciones que interactuan directamente con la BD
+- Model: Representan objectos de BD
+- Utils: clases u objectos utilitarios
+- Dto: Objectos que permiten el transporte de datos entre capas
+- Docs: utilizado para la componente Swagger
 
-# 4. **Documnetación Referencial**
+Otros aspectos relevantes:
+- Por otro lado, traté de ir realizando separación de responsabilidades para que cada archivo tuviera métodos/funciones que estuvieran en un mismo contexto (esto invocando al Principio de Responsabilidad Úncica que plantea SOLID)
+- Implementé el uso de una base de datos NonSQL para el tratamiento de algunos datos.
+- Siempre es recomendado en el diseño de APIs implementar Swagger para que quienes consuman los servicios puedan tener una documentación que indique de forma rápida lo que debe o no enviar en cada invocación.
+
+# 5. **Documnetación Referencial**
 Youtube
 - How does GPS work? https://www.youtube.com/watch?v=FU_pY2sTwTA&t=22s
 - Trilateración vs Triangulación https://www.youtube.com/watch?v=WzCXNIDbw7w&t=256s

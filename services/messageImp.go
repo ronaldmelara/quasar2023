@@ -71,8 +71,6 @@ func GetMessage() ([]string, error){
 		return []string{""}, err
 	}
 
-	//repository.SaveMessages(messages...)
-
 	messages = matchLegth(maxSize, messages...)
 
 	var t int = 0
@@ -80,11 +78,9 @@ func GetMessage() ([]string, error){
 		t++
 		if (l < len(messages)-1){
 			messages[l+1] = combinedCollection(messages[l], messages[l+1])
-			//messages[l] = combinedCollection(messages[l+1], messages[l])
 			l++
 		}else{
 			messages[t] = combinedCollection(messages[l-1], messages[t])
-			//messages[l-1] = combinedCollection(messages[t], messages[l-1])
 		}	
 	}
 
@@ -104,7 +100,6 @@ func combinedCollection(col1, col2 []string) []string{
 
 	for i:=0; i < len(col1); i++{
 		if (j>= len(col2) || col1[i] != col2[i]){
-			//missing = append(missing, res1[i])
 			if len(col1[i]) > 0{
 				col2[i] = col1[i]
 			}
