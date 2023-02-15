@@ -92,8 +92,6 @@ func getSatelliteGet(w http.ResponseWriter, r *http.Request){
 
 	id := strings.TrimPrefix(r.URL.Path, "/api/v1/topsecret_split/")
 
-
-	fmt.Println(len(id))
 	if len(id) <= 0 {
 		http.Error(w, "Bad Request", http.StatusBadRequest)
 		return

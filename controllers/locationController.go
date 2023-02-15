@@ -22,10 +22,7 @@ func Test(){
 	
 
 
-	o, er:= services.GetMessage(
-		[]string{"este", "", "", "mensaje", ""},
-		[]string{"", "es", "", "","secreto"},
-		[]string{"este", "", "un", "", ""})
+	o, er:= services.GetMessage()
 	if er == nil{
 		fmt.Println(o)
 	}else{

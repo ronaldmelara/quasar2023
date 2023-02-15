@@ -3,6 +3,7 @@ module meliQuasar
 go 1.19
 
 require (
+	github.com/mattn/go-sqlite3 v1.14.16
 	github.com/swaggo/http-swagger v1.3.3
 	github.com/swaggo/swag v1.8.10
 )

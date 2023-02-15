@@ -2,9 +2,10 @@ package services
 
 import (
 	"errors"
-	"sort"
+	_"fmt"
 	"meliQuasar/repository"
 	"meliQuasar/util"
+	"sort"
 )
 
 const MESSAGE_ERROR_MAX_LEN string = "the number of messages does not match the number of satellites"
@@ -29,14 +30,48 @@ func getMaxLength(totalSatellite int, ar ...[]string)(int, error){
 	return maxSize, nil
 }
 
-func GetMessage(messages ...[]string) ([]string, error){
+func SaveMessages(messages ...[]string) error{
+	lstSat, err := repository.GetSatellites()
+	if(err!= nil){
+		return err
+	}
 
-	lstSat := repository.GetSatellites()
+	_, err = getMaxLength(len(lstSat), messages...)
+	if err != nil{
+		return err
+	}
+
+	err = repository.SaveMessages(messages...)
+	if err != nil{
+		return err
+	}
+
+	return nil
+}
+
+func GetMessageBySatellite(id int)([]string, error){
+	msg, err := repository.GetMessageBySatellite(id)
+	if err != nil{
+		return []string{""},err
+	}
+	return msg, nil
+}
+
+func GetMessage() ([]string, error){
+
+	lstSat, err := repository.GetSatellites()
+	if(err != nil){
+		return nil, err
+	}
+	_, messages := repository.GetMessages()
+
 
 	maxSize, err := getMaxLength(len(lstSat), messages...)
 	if err != nil{
 		return []string{""}, err
 	}
+
+	//repository.SaveMessages(messages...)
 
 	messages = matchLegth(maxSize, messages...)
 

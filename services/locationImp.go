@@ -2,7 +2,7 @@ package services
 
 import (
 	"errors"
-	"fmt"
+	_"fmt"
 	"log"
 	"math"
 	"meliQuasar/model"
@@ -17,11 +17,14 @@ const MESSAGE_ERROR_DIV_BY_ZERO string = "Error by divison by zero"
 const MESSAGE_ERROR_DISTANCE_SAT string = "The distance entered is outside the radius of the satellite"
 
 func GetLocation(distances ...float32)(float32, float32, error){
-	fmt.Println("Calculate Trilateration")
+	//fmt.Println("Calculate Trilateration")
 	var lstSat []model.Satellite
-	lstSat = repository.GetSatellites()
+	lstSat, err := repository.GetSatellites()
+	if(err != nil){
+		panic(err)
+	}
 
-	err := validateDistances(lstSat, distances...)
+	err = validateDistances(lstSat, distances...)
 	if(err != nil){
 		
 		return 0.0,0.0,err
@@ -71,7 +74,11 @@ func GetLocation(distances ...float32)(float32, float32, error){
 
 func CheckExistsSatellite(name string) (bool, model.Satellite){
 	var lstSat []model.Satellite
-	lstSat = repository.GetSatellites()
+	lstSat,err := repository.GetSatellites()
+
+	if(err!= nil){
+		panic(err)
+	}
 
 	for _, v := range lstSat{
 		if strings.ToLower(v.Name) == strings.TrimSpace(strings.ToLower(name)){

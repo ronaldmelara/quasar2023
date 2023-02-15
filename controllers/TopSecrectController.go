@@ -9,7 +9,6 @@ import (
 	"meliQuasar/util"
 )
 
-//const MESSAGE_ERROR_SAT_NOT_FOUND string = "Could not find satellite %s"
 
 func GetTopSecret(rq dto.TopSecret)(dto.ResponseTopSecret, error){
 
@@ -29,7 +28,7 @@ func GetTopSecret(rq dto.TopSecret)(dto.ResponseTopSecret, error){
 		messages = append(messages, v.Message)
 	}
 
-	fmt.Println(distances)
+	
 	x, y, err := services.GetLocation(distances...)
 	if err != nil{
 		return dto.ResponseTopSecret{} , err
@@ -37,7 +36,12 @@ func GetTopSecret(rq dto.TopSecret)(dto.ResponseTopSecret, error){
 	resp.Position.X = x
 	resp.Position.Y = y
 
-	m, er:= services.GetMessage(messages...)
+	er := services.SaveMessages(messages...)
+	if(er != nil){
+		return dto.ResponseTopSecret{}  ,  er
+	}
+
+	m, er := services.GetMessage()
 	if er != nil{
 		return dto.ResponseTopSecret{}  ,  er
 	}
@@ -68,7 +72,15 @@ func GetTopSecretSplit(rq dto.Entry)(dto.ResponseTopSecret, error){
 	var resp dto.ResponseTopSecret
 	resp.Position.X = s.X
 	resp.Position.Y = s.Y
-	resp.Message = "test"
+
+	message, err := services.GetMessage()
+
+	if err != nil{
+		return dto.ResponseTopSecret{}  ,  err
+	}
+
+	resp.Message =  strings.Join(message," ")
+
 
 	return resp, nil
 }
@@ -87,7 +99,15 @@ func GetTopSecretSplitByName(name string)(dto.ResponseTopSecret, error){
 	var resp dto.ResponseTopSecret
 	resp.Position.X = s.X
 	resp.Position.Y = s.Y
-	resp.Message = ""
+
+	message, err := services.GetMessageBySatellite(s.Id)
+
+	if err != nil{
+		return dto.ResponseTopSecret{}  ,  err
+	}
+
+	resp.Message =  strings.Join(message,"***")
+
 
 	return resp, nil
 }
