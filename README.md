@@ -10,7 +10,7 @@
     - [2.2 **Mensaje**](#22-mensaje)
 - [3. **Servicios disponibles**](#3-servicios-disponibles)
 - [4. **Buenas prácticas/Diseño**](#4-buenas-prácticasdiseño)
-- [5. **Documnetación Referencial**](#5-documnetación-referencial)
+- [5. **Documentación Referencial**](#5-documentación-referencial)
 
 <!-- /TOC -->
 
@@ -195,7 +195,7 @@ Otros aspectos relevantes:
 - Implementé el uso de una base de datos NonSQL para el tratamiento de algunos datos.
 - Siempre es recomendado en el diseño de APIs implementar Swagger para que quienes consuman los servicios puedan tener una documentación que indique de forma rápida lo que debe o no enviar en cada invocación.
 
-# 5. **Documnetación Referencial**
+# 5. **Documentación Referencial**
 Youtube
 - How does GPS work? https://www.youtube.com/watch?v=FU_pY2sTwTA&t=22s
 - Trilateración vs Triangulación https://www.youtube.com/watch?v=WzCXNIDbw7w&t=256s
