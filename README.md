@@ -161,6 +161,11 @@ De lo anterior tenemos como resultado 2 ecuaciones:
 Finalmente resolvemos por Determinantes o regla de Cramer para obtener las ecuaciones que nos permitirán conocer el punto X e Y donde se intecepta de la nave enemiga con los 3 satélites.
 ![Ecuación por circunferencia](/assets/img/08_sol.jpeg)
 
+*Utilizando esta ecuación, para que los 3 radios de las circunferencias se toquen en un punto, las distancias deberian ser:
+- Kenobi de 538.57
+- Skywalter de 141.42
+- Sato de 509.90
+
 
 Para solucionar la llamada al servicio /topsecret_split/ del Nivel 3, suceden 2 variables:
 - Cuando es una llamada POST, al recibir la información de la distancia y el mensaje, es posible validar que la distancia ingresada está dentro del radio de alcance del satélite. Para ello utilizaremos los puntos (x,y) de la posición del satélite (que consideraremos como borde de la cirunferencia) y el punto (0,0) como punto inicial, quedando nuestra formular asi: **radio := √(0.0-X)^2 + (0.0-Y)^2)**. De esta manera sabremos si la distancia ingresada esta en el radio de alcance del satélite.
